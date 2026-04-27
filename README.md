@@ -136,6 +136,10 @@ To understand the metric improvements, we must analyze the physical semantic out
 > **[🖼️ Insert Image Here: Your Optimized 3x3 Mask Grid (image_a404fc.png)]**
 > *(Observation: Building footprints are now sharply delineated, road networks are continuous, and micro-obstacles are successfully detected.)*
 
+## 📦 Pre-trained Models
+The trained model weights (`.pth`) are hosted on Google Drive due to file size limits:
+* [Download checkpoint_epoch30.pth (Google Drive)]([https://drive.google.com/file/d/16YivEBp0F93EYIbe_kAPZYqTsg2YxQsP/view?usp=sharing])
+
 ---
 
 <span id="visualization"></span>
