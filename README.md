@@ -70,22 +70,29 @@ We used **AMtown Dataset**, which features complex urban topologies and highly i
 <span id="methodology"></span>
 ## 🧠 Methodology
 
-To tackle the complexities of urban terrain and the severe class imbalance in the AMtown dataset, we designed a pipeline that prioritizes geometric recovery and mathematically penalizes long-tail dominance.
+To tackle the severe class imbalance and geometric complexities of the AMtown dataset, we designed an optimization pipeline that mathematically prioritizes micro-features over dominant backgrounds.
 
-### 1. Base Architecture: U-Net Trained from Scratch
-We adopted the classic **U-Net** architecture, leveraging its symmetric encoder-decoder structure and skip connections to recover fine-grained spatial geometries and sharp building edges. 
-* **Zero Pre-training:** Instead of using pre-trained backbones (e.g., ResNet on ImageNet), we trained the model entirely from scratch. This ensures the convolutional filters are strictly optimized for the unique top-down perspective and specific structural textures of the UAV aerial dataset, completely avoiding domain-shift biases.
+### 1. Base Architecture: U-Net from Scratch
+We adopted a classic **U-Net** trained entirely from scratch, leveraging its symmetric encoder-decoder structure to recover fine-grained spatial geometries.
 
-### 2. Strategy I: Dynamic Class Weights (Long-tail Optimization)
-The AMtown dataset exhibits an extreme long-tail distribution. To prevent the model from collapsing into a "greedy prediction" state, we implemented a custom-weighted `CrossEntropyLoss`. By hardcoding physical priorities into the loss function, we reshaped the model's optimization trajectory:
-* **Suppressing Dominant Classes:** Scaled down weights for massive regions like `background` (0.1) and `green_field` (0.5) to strictly penalize lazy, high-frequency predictions.
-* **Boosting Structural Boundaries:** Applied a **5x multiplier** to linear infrastructure like `paved_motor_road` and `dirt_motor_road` to ensure continuous and unbroken route extraction.
-* **Protecting Micro-objects:** Assigned a massive **10x multiplier** to highly vulnerable and sparse categories (`solar_board`, `vehicles`). This forces the gradients to update aggressively when these critical micro-obstacles are misclassified, guaranteeing their visibility in the final cognitive map.
+> **Architectural Philosophy:** By strictly avoiding ImageNet pre-trained backbones, we ensured the convolutional filters were optimized *only* for the unique top-down perspective and structural textures of UAV aerial imagery, thereby eliminating domain-shift biases.
 
-### 3. Strategy II: Online Data Augmentation (Spatial Memory Disruption)
-Deep neural networks can easily overfit to the absolute spatial coordinates of a static dataset (e.g., memorizing specific map layouts). To disrupt this "spatial memory," we integrated dynamic geometric perturbations within the PyTorch DataLoader:
-* **Synchronous Transformations:** We applied random horizontal and vertical flips with a 50% probability to both the input images and their corresponding ground-truth masks simultaneously on the fly. 
-* **Topological Learning:** This intervention effectively strips the model of its spatial coordinate memory, forcing the convolutional kernels to learn robust, orientation-invariant topological features of the urban structures.
+### 2. Strategy I: Dynamic Class Weights
+The dataset exhibits an extreme long-tail distribution. To prevent the model from collapsing into a "greedy prediction" state (predicting everything as background), we hardcoded physical priorities into our `CrossEntropyLoss`. 
+
+Here is our explicitly defined value system:
+
+| Target Class Category | Weight Multiplier | Engineering Purpose |
+| :--- | :---: | :--- |
+| `background`, `green_field` | **⬇️ 0.1x / 0.5x** | **Suppress Dominant Classes**: Strictly penalize lazy, high-frequency background predictions. |
+| `paved_motor_road`, `dirt_road` | **⬆️ 5.0x** | **Boost Structural Boundaries**: Ensure continuous and unbroken route extraction. |
+| `solar_board`, `vehicles` | **🚀 10.0x** | **Protect Micro-objects**: Force aggressive gradient updates for critical UAV obstacles. |
+
+### 3. Strategy II: Online Data Augmentation
+Deep neural networks can easily overfit to the absolute spatial coordinates of a static dataset. To disrupt this "spatial memory," we integrated dynamic geometric perturbations.
+
+* 🔄 **The Action (Synchronous Flips):** Random horizontal and vertical flips (50% probability) applied synchronously to both the input images and their ground-truth masks on the fly during data loading.
+* 🎯 **The Purpose (Topological Learning):** This intervention effectively strips the model of its spatial coordinate memory. Instead of memorizing specific map layouts, the convolutional kernels are forced to learn robust, orientation-invariant topological features of the urban structures.
 
 ---
 
