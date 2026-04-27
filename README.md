@@ -121,9 +121,9 @@ Following our dynamic weight interventions, the model successfully activated on 
 | **Mean Dice** | 32.75% | **69.95%** | 🚀 **+ 37.20%** |
 
 **The Micro-Object Breakthrough:** The most significant achievement was resurrecting the detection of fatal UAV obstacles that previously scored zero:
-* ☀️ **Solar Board:** IoU jumped from `0.0000` ➔ **`0.6668`**
-* 🌉 **Bridge:** IoU jumped from `0.0000` ➔ **`0.6669`**
-* 🚗 **Vehicles (Sedan):** IoU jumped from `0.0000` ➔ **`0.4341`**
+*  **Solar Board:** IoU jumped from `0.0000` ➔ **`0.6668`**
+*  **Bridge:** IoU jumped from `0.0000` ➔ **`0.6669`**
+*  **Vehicles (Sedan):** IoU jumped from `0.0000` ➔ **`0.4341`**
 
 ### 2. Output Analysis: Overcoming the Baseline Failure
 To understand the metric improvements, we must analyze the physical semantic outputs. 
@@ -136,7 +136,7 @@ To understand the metric improvements, we must analyze the physical semantic out
 > **[🖼️ Insert Image Here: Your Optimized 3x3 Mask Grid (image_a404fc.png)]**
 > *(Observation: Building footprints are now sharply delineated, road networks are continuous, and micro-obstacles are successfully detected.)*
 
-## 📦 Pre-trained Models
+### 📦 Pre-trained Models
 The trained model weights (`.pth`) are hosted on Google Drive due to file size limits:
 * [Download checkpoint_epoch30.pth (Google Drive)]([https://drive.google.com/file/d/16YivEBp0F93EYIbe_kAPZYqTsg2YxQsP/view?usp=sharing])
 
