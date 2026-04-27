@@ -57,7 +57,7 @@ The system supports:
 
 <span id="dataset-description"></span>
 ## 🗺️ Dataset Description
-We used the customized **AMtown Dataset**, which features complex urban topologies and highly imbalanced class distributions.
+We used **AMtown Dataset**, which features complex urban topologies and highly imbalanced class distributions.
 * **Sources**: AMtown01, AMtown02, AMtown03.
 * **Split Strategy**:
   * **Training Set**: AMtown01 + AMtown02.
