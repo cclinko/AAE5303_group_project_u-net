@@ -88,11 +88,17 @@ Here is our explicitly defined value system:
 | `paved_motor_road`, `dirt_road` | **⬆️ 5.0x** | **Boost Structural Boundaries**: Ensure continuous and unbroken route extraction. |
 | `solar_board`, `vehicles` | **🚀 10.0x** | **Protect Micro-objects**: Force aggressive gradient updates for critical UAV obstacles. |
 
+> **The Logic:** We suppressed massive regions (background, green fields) while injecting weight multipliers (up to 10x) for vulnerable micro-objects (solar boards, vehicles).
+> 
+> <img src="image/图片0.png" width="600" alt="CrossEntropyLoss with Class Weights">
+
 ### 3. Strategy II: Online Data Augmentation
 Deep neural networks can easily overfit to the absolute spatial coordinates of a static dataset. To disrupt this "spatial memory," we integrated dynamic geometric perturbations.
 
 * 🔄 **The Action (Synchronous Flips):** Random horizontal and vertical flips (50% probability) applied synchronously to both the input images and their ground-truth masks on the fly during data loading.
 * 🎯 **The Purpose (Topological Learning):** This intervention effectively strips the model of its spatial coordinate memory. Instead of memorizing specific map layouts, the convolutional kernels are forced to learn robust, orientation-invariant topological features of the urban structures.
+
+<img src="image/图片1.png" width="400" alt="Online Data Augmentation Code">
 
 ---
 
@@ -129,11 +135,11 @@ Following our dynamic weight interventions, the model successfully activated on 
 To understand the metric improvements, we must analyze the physical semantic outputs. 
 
 **The Baseline Failure:** Before optimization, the naive network aggressively predicted almost the entire map as a single class (green field), completely ignoring the underlying urban topology.
-> **[🖼️ Insert Image Here: Your Baseline 2x2 Mask Grid (image_d5d0ec.png)]**
+> ![Baseline Prediction Failure](image/a.png)
 > *(Observation: Critical architectural structures and roads are entirely swallowed by false-positive field predictions.)*
 
 **The Optimized Output:** After injecting physical priorities, the network was forced to respect the true geometric boundaries of the environment.
-> **[🖼️ Insert Image Here: Your Optimized 3x3 Mask Grid (image_a404fc.png)]**
+> ![Optimized Output Success](image/b.png)
 > *(Observation: Building footprints are now sharply delineated, road networks are continuous, and micro-obstacles are successfully detected.)*
 
 ### 📦 Pre-trained Models
@@ -151,21 +157,21 @@ This section provides the data visualization of our training dynamics and the pe
 The bar charts below illustrate the dramatic shift from a highly skewed, long-tail failure to a balanced, comprehensive cognitive map.
 
 **Baseline Distribution:**
-> **[🖼️ Insert Image Here: Your Baseline Bar Chart (image_d5d3ba.png)]**
+> ![Baseline Bar Chart](image/a2.png)
 > *(Note the complete failure—scores of 0.0000—across more than half of the categories, including all micro-objects.)*
 
 **Optimized Distribution:**
-> **[🖼️ Insert Image Here: Your Optimized Bar Chart (image_d5d019.png)]**
+> ![Optimized Bar Chart](image/b2.png)
 > *(The optimized model successfully establishes valid, high-scoring statistical boundaries across all 26 complex urban categories.)*
 
 ### 2. Training Dynamics & Convergence
 We visualized the Loss trajectory and Validation metrics to confirm model stability and the absence of overfitting.
 
-**Baseline Convergence:**
-> **[🖼️ Insert Image Here: Your Baseline Line Chart (image_d5d411.png)]**
+**Baseline Convergence (5 Epochs):**
+> ![Baseline Training Curve](image/a3.png)
 
 **Optimized Convergence (30 Epochs):**
-> **[🖼️ Insert Image Here: Your Optimized 30-Epoch Line Chart (image_d5d077.png)]**
+> ![Optimized Training Curve](image/b3.png)
 > *(The optimized training loss smoothly converged to 0.1363, while the Validation Dice score maintained a consistent upward trend, peaking at 0.9597.)*
 
 ---
