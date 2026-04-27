@@ -1,4 +1,18 @@
-# Urban Terrain Semantic Segmentation and Optimization based on U-Net
+<div align="center">
+
+# AAE5303 Assignment: Semantic Segmentation with U-Net
+
+<img src="https://img.shields.io/badge/NETWORK-U--NET-1f77b4?style=for-the-badge" alt="Network">
+<img src="https://img.shields.io/badge/MODE-SEMANTIC_SEGMENTATION-9bc53d?style=for-the-badge" alt="Mode">
+<img src="https://img.shields.io/badge/DATASET-AMtown-f26419?style=for-the-badge" alt="Dataset">
+<img src="https://img.shields.io/badge/STATUS-OPTIMIZED-5cb85c?style=for-the-badge" alt="Status">
+
+<h3>Pixel-Level Environmental Perception on UAV Aerial Imagery</h3>
+
+<i>AMtown Dataset - 26 Categories Classification</i>
+
+<br>
+</div>
 
 ## 📚 Table of Contents
 1. [Project Summary](#-project-summary)
