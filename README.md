@@ -117,14 +117,27 @@ Over 30 epochs, training loss converged from 1.95 to 0.136. Validation metrics s
 
 <span id="discussion"></span>
 ## 🤔 Discussion
-This project demonstrates that under computational constraints (0.25 scaling), architectural selection alone is insufficient. **Engineering intervention**—specifically human-defined physical importance via class weight penalties—is the key to breaking performance bottlenecks in imbalanced datasets.
+
+This project highlights a critical reality in deploying deep learning models for real-world robotics: **algorithmic architecture alone cannot overcome fundamental physical and computational constraints.**
+
+Due to severe hardware limitations, the required **0.25** global downscaling drastically compressed the already scarce pixel footprint of critical micro-objects. Consequently, the baseline U-Net fell into a classic **"greedy prediction trap"**—achieving superficially high pixel accuracy by aggressively predicting dominant background classes while completely blinding itself to long-tail categories.
+
+To break this bottleneck, we shifted our focus from architectural changes to **Engineering Intervention**, fundamentally altering the model's learning behavior:
+
+* **Redefining Value (Class Weights):** We explicitly reweighted the loss function based on physical safety importance rather than pixel frequency, forcing the model to prioritize critical micro-obstacles.
+* **Disrupting Spatial Memory (Data Augmentation):** We introduced dynamic geometric flips to strip the model of its spatial coordinate memory, compelling it to learn true urban topological features.
+
+Ultimately, this project taught us that throwing a better network architecture at a problem isn't always the answer, especially under strict hardware constraints. The real breakthrough came from looking at the data through an engineering lens—realizing that a few pixels of a solar panel matter far more than thousands of pixels of grass. It was this human intuition, explicitly hardcoded into the training pipeline, that made the system actually work in a practical scenario.
 
 ---
 
 <span id="future-outlook"></span>
 ## 🚀 Future Outlook
-To support advanced Vision-and-Language Navigation (VLN), the system will evolve in three directions:
 
-1. **Patch-based Training**: Discard global downscaling in favor of random 512x512 HD patches to improve resolution of micro-features.
-2. **Advanced Loss Functions**: Introduce **Focal Loss** for "hard sample mining" to focus on ambiguous boundaries.
-3. **True 3D Semantic Fusion**: Back-project 2D masks onto 3D Gaussian splats via camera intrinsics to build seamless 3D Semantic Cognitive Maps.
+To support advanced Vision-and-Language Navigation (VLN) and robust UAV obstacle avoidance, the system must evolve in terms of resolution, boundary perception, and 3D integration. Below is our engineering evaluation matrix for the next technical iterations:
+
+| Optimization Strategy | Engineering Trade-offs (Pros & Cons) | Implementation Cost | ROI / Priority |
+| :--- | :--- | :---: | :---: |
+| **1. HD Patch-based Training**<br>*(Random 512x512 crops replacing global downscaling)* | **Pros:** Fundamentally resolves the loss of micro-features caused by image compression.<br>**Cons:** Drastically increases training epochs and requires complex sliding-window logic for inference. | ⏱️ Medium | ⭐⭐⭐⭐ |
+| **2. Focal Loss Integration**<br>*(Hard sample mining)* | **Pros:** Forces the model to focus on ambiguous boundaries with **zero** added inference latency.<br>**Cons:** Highly sensitive to hyperparameter tuning (Gamma) and noisy dataset labels. | ⏱️ Low | ⭐⭐⭐⭐⭐ |
+| **3. True 3D Semantic Fusion**<br>*(Back-projecting 2D masks onto 3D Gaussian Splats)* | **Pros:** Builds the ultimate Cognitive Map for UAVs, perfectly bridging 2D semantics with 3D geometry.<br>**Cons:** Extreme mathematical complexity; requires rigorous pixel-level alignment between 2D inference and 3D camera poses. | ⏱️ Very High | ⭐⭐⭐ |
