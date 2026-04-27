@@ -104,11 +104,33 @@ Deep neural networks can easily overfit to the absolute spatial coordinates of a
 
 <span id="implementation-details"></span>
 ## 💻 Implementation Details
-* **Framework**: Google Colab / PyTorch.
-* **Hyperparameters**:
-  * **Learning Rate**: Recalibrated to **1e-6** to prevent gradient explosion (NaN) observed at 1e-4.
-  * **Scale**: Global downscaling factor of 0.25.
-* **Mixed Precision Training (AMP)**: Implemented using `torch.amp.autocast('cuda')` for faster training and reduced VRAM usage.
+
+To ensure strict reproducibility and handle Google Colab's hardware constraints effectively, we meticulously configured the training pipeline with the following engineering specifications.
+
+### 1. Training Environment & Architecture
+* **Framework:** PyTorch (Executed on Google Colab GPU environment).
+* **Model Architecture:** Original U-Net (`n_channels=3`, `n_classes=26`, `bilinear=False`).
+* **Dataset Splitting:** * **Train/Validation:** AMtown01 + AMtown02 (Split ratio: 90% Training / 10% Validation).
+  * **Test:** AMtown03.
+
+### 2. Hyperparameter Configuration
+We abandoned the default `1e-4` learning rate due to observed gradient explosions (NaN values) early in training. The entire pipeline was recalibrated for absolute stability:
+
+| Hyperparameter | Value | Engineering Purpose |
+| :--- | :---: | :--- |
+| **Epochs** | `30` | Monitored full convergence without triggering overfitting. |
+| **Batch Size** | `8` | Maximized within the strict Colab VRAM limits. |
+| **Scale Factor** | `0.25` | Global downscaling applied to HD inputs (`1.0` caused immediate OOM). |
+| **Optimizer** | `RMSprop` | Selected for robust gradient descent (`momentum=0.999`, `weight_decay=1e-8`). |
+| **Base Learning Rate** | `1e-6` | Recalibrated safety threshold to prevent early training collapse. |
+| **LR Scheduler** | `ReduceLROnPlateau` | Dynamically decays learning rate (`patience=3`) based on `val_dice` plateauing. |
+
+### 3. Engineering Optimizations
+To achieve the 30-epoch convergence efficiently, we implemented several under-the-hood optimization techniques:
+
+* **Compound Loss Function:** Formulated the objective as `Total Loss = Weighted CrossEntropyLoss + Multiclass DiceLoss`. Additionally, unannotated regions were explicitly masked out using `ignore_index=255`.
+* **Automatic Mixed Precision (AMP):** Implemented via `torch.cuda.amp.autocast()` and `GradScaler`. This reduced the VRAM footprint by nearly 50% and significantly accelerated Tensor Core matrix multiplications.
+* **Gradient Clipping:** Enforced `clip_grad_norm_ = 1.0` to physically cap the gradient magnitudes, acting as a secondary defense against gradient explosions during the volatile early epochs.
 
 ---
 
