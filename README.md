@@ -1,4 +1,4 @@
-<img width="256" height="256" alt="image" src="https://github.com/user-attachments/assets/e31b7983-03c6-405e-be20-20e487a64554" /><div align="center">
+<div align="center">
 
 # AAE5303 Assignment: Semantic Segmentation with U-Net
 
