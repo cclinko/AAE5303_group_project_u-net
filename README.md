@@ -1,4 +1,4 @@
-<div align="center">
+<img width="256" height="256" alt="image" src="https://github.com/user-attachments/assets/e31b7983-03c6-405e-be20-20e487a64554" /><div align="center">
 
 # AAE5303 Assignment: Semantic Segmentation with U-Net
 
@@ -14,19 +14,20 @@
 <br>
 </div>
 
-## 📚 Table of Contents
-1. [Project Summary](#-project-summary)
-2. [Introduction](#-introduction)
-3. [Dataset Description](#-dataset-description)
-4. [Methodology](#-methodology)
-5. [Implementation Details](#-implementation-details)
-6. [Results and Analysis](#-results-and-analysis)
-7. [Visualization](#-visualization)
-8. [Discussion](#-discussion)
-9. [Future Outlook](#-future-outlook)
+## 📑 Table of Contents
+1. [Project Summary](#project-summary)
+2. [Introduction](#introduction)
+3. [Dataset Description](#dataset-description)
+4. [Methodology](#methodology)
+5. [Implementation Details](#implementation-details)
+6. [Results and Analysis](#results-and-analysis)
+7. [Visualization](#visualization)
+8. [Discussion](#discussion)
+9. [Future Outlook](#future-outlook)
 
 ---
 
+<span id="project-summary"></span>
 ## 📝 Project Summary
 This project addresses the environmental perception needs of low-altitude Unmanned Aerial Vehicles (UAVs) in complex urban terrains. Under constraints of limited computational power (Global Scaling = 0.25) and extreme class imbalance (Long-tail distribution), we trained and optimized a U-Net semantic segmentation model.
 
@@ -43,7 +44,8 @@ By introducing **Customized Dynamic Class Weight Penalties** and **Online Data A
 
 ---
 
-## 🌟 Introduction
+<span id="introduction"></span>
+## 💡 Introduction
 With the explosive growth of the low-altitude economy, autonomous navigation and safe obstacle avoidance for UAVs in complex urban environments have become core challenges for UTM (UAS Traffic Management) systems. This project utilizes the **U-Net** architecture to provide "pixel-level" environmental perception.
 
 The system supports:
@@ -53,7 +55,8 @@ The system supports:
 
 ---
 
-## 📊 Dataset Description
+<span id="dataset-description"></span>
+## 🗺️ Dataset Description
 We used the customized **AMtown Dataset**, which features complex urban topologies and highly imbalanced class distributions.
 * **Sources**: AMtown01, AMtown02, AMtown03.
 * **Split Strategy**:
@@ -64,6 +67,7 @@ We used the customized **AMtown Dataset**, which features complex urban topologi
 
 ---
 
+<span id="methodology"></span>
 ## 🧠 Methodology
 
 ### 1. Base Architecture
@@ -81,7 +85,8 @@ Forces the model to learn true physical topology rather than memorizing spatial 
 
 ---
 
-## ⚙️ Implementation Details
+<span id="implementation-details"></span>
+## 💻 Implementation Details
 * **Framework**: Google Colab / PyTorch.
 * **Hyperparameters**:
   * **Learning Rate**: Recalibrated to **1e-6** to prevent gradient explosion (NaN) observed at 1e-4.
@@ -90,7 +95,8 @@ Forces the model to learn true physical topology rather than memorizing spatial 
 
 ---
 
-## 📈 Results and Analysis
+<span id="results-and-analysis"></span>
+## 📊 Results and Analysis
 
 ### Performance Evolution
 * **Baseline**: Suffered from a greedy strategy, predicting almost everything as background; micro-object scores were zero.
@@ -101,18 +107,21 @@ Over 30 epochs, training loss converged from 1.95 to 0.136. Validation metrics s
 
 ---
 
-## 🖼️ Visualization
+<span id="visualization"></span>
+## 🎨 Visualization
 * **Metrics Visualization**: [Insert Bar Chart of Per-Class IoU]
 * **Prediction Comparison**: [Insert Ground Truth vs. Prediction Comparison]
 > **Observation**: The optimized model successfully restored building edges and recovered "invisible" micro-objects that were completely missed in the baseline.
 
 ---
 
-## 💬 Discussion
+<span id="discussion"></span>
+## 🤔 Discussion
 This project demonstrates that under computational constraints (0.25 scaling), architectural selection alone is insufficient. **Engineering intervention**—specifically human-defined physical importance via class weight penalties—is the key to breaking performance bottlenecks in imbalanced datasets.
 
 ---
 
+<span id="future-outlook"></span>
 ## 🚀 Future Outlook
 To support advanced Vision-and-Language Navigation (VLN), the system will evolve in three directions:
 
