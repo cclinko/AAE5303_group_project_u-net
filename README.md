@@ -33,12 +33,12 @@ This project addresses the environmental perception needs of low-altitude Unmann
 
 By introducing **Customized Dynamic Class Weight Penalties** and **Online Data Augmentation**, we successfully resolved the local optimum trap where the model failed to predict minority classes. The final model achieved a significant leap in core evaluation metrics, particularly for micro-objects.
 
-### 🏆 Key Results Comparison
-| Metrics | Baseline Model | Optimized Model | Improvement (Gain) |
-| :--- | :---: | :---: | :---: |
-| **Pixel Accuracy** | 85.50% | **92.20%** | 🚀 + 6.70% |
-| **Mean IoU** | 24.80% | **60.59%** | 🚀 **+ 35.79%** |
-| **Mean Dice** | 32.75% | **69.95%** | 🚀 **+ 37.20%** |
+### 🏆 Key Results
+| Metrics | Optimized Model |
+| :--- | :---: |
+| **Pixel Accuracy** | **92.20%** |
+| **Mean IoU** | **60.59%** |
+| **Mean Dice** | **69.95%** |
 
 *Note: The peak Validation Dice (excluding background) stabilized at **0.9597**.*
 
