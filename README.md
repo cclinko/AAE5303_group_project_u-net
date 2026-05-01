@@ -166,7 +166,7 @@ To understand the metric improvements, we must analyze the physical semantic out
 
 ### 📦 Pre-trained Models
 The trained model weights (`.pth`) are hosted on Google Drive due to file size limits:
-* [Download checkpoint_epoch30.pth (Google Drive)]([https://drive.google.com/file/d/16YivEBp0F93EYIbe_kAPZYqTsg2YxQsP/view?usp=sharing])
+* [Download checkpoint_epoch30.pth (Google Drive)] ([https://drive.google.com/file/d/16YivEBp0F93EYIbe_kAPZYqTsg2YxQsP/view?usp=sharing])
 
 ---
 
